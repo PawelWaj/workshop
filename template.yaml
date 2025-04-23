@@ -1,0 +1,54 @@
+apiVersion: backstage.io/v1alpha1
+kind: Template
+metadata:
+  name: workshop-app-template
+  title: Workshop App Template
+  description: Create a new workshop application with GitHub PR and ArgoCD deployment
+  tags:
+    - kubernetes
+    - workshop
+    - backstage
+    - argocd
+spec:
+  type: service
+  owner: workshop-team
+  parameters:
+    - title: Application Details
+      required:
+        - name
+      properties:
+        name:
+          title: Application Name
+          type: string
+          description: Unique name for the application (lowercase, alphanumeric, hyphens)
+          pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+    - title: Repository Details
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository URL
+          type: string
+          description: GitHub repository for the PR
+          default: github.com?owner=PawelWaj&repo=workshop
+  steps:
+    - id: fetch-template
+      name: Fetch Template Files
+      action: fetch:plain
+      input:
+        url: ./skeleton
+        targetPath: .
+    - id: publish-pr
+      name: Create Pull Request
+      action: publish:github:pull-request
+      input:
+        repoUrl: '{{ parameters.repoUrl }}'
+        branchName: new-app-{{ parameters.name }}
+        title: 'Add new app: {{ parameters.name }}'
+        description: 'Adds Kubernetes manifests and catalog info for {{ parameters.name }}'
+        sourcePath: .
+        targetPath: k8s/{{ parameters.name }}
+  output:
+    links:
+      - title: View Pull Request
+        url: '{{ steps.publish-pr.output.url }}'
