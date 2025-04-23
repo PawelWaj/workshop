@@ -1,0 +1,76 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: workshop-app
+  description: Workshop application template for Backstage, GitHub, and ArgoCD integration
+  annotations:
+    github.com/project-slug: PawelWaj/workshop
+    argocd/app-name: workshop-app
+  tags:
+    - kubernetes
+    - workshop
+    - backstage
+    - argocd
+spec:
+  type: service
+  lifecycle: experimental
+  owner: workshop-team
+  system: workshop-system
+  providesApis:
+    - example-api
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system
+  description: System containing all workshop components
+spec:
+  owner: workshop-team
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: example-api
+  description: Example API for the workshop
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: workshop-team
+  definition: |
+    openapi: "3.0.0"
+    info:
+      version: 1.0.0
+      title: Example API
+      description: Example API for the workshop
+      license:
+        name: MIT
+    paths:
+      /health:
+        get:
+          summary: Health check
+          responses:
+            '200':
+              description: OK
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: workshop-team
+  description: Workshop team
+spec:
+  type: team
+  profile:
+    displayName: Workshop Team
+    email: workshop@example.com
+    picture: https://avatars.githubusercontent.com/u/44042312
+  parent: default-org
+  children: []
+---
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: workshop-locations
+  description: A collection of all workshop components
+spec:
+  targets:
+    - ./k8s/*/catalog-info.yaml
