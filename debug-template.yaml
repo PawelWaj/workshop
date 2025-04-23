@@ -1,0 +1,20 @@
+apiVersion: backstage.io/v1beta1
+kind: Template
+metadata:
+  name: workshop-app-template
+  title: Workshop App Template
+  description: Test template
+spec:
+  type: service
+  owner: workshop-team
+  parameters:
+    - title: Name
+      properties:
+        name:
+          type: string
+  steps:
+    - id: log
+      name: Log
+      action: debug:log
+      input:
+        message: Hello, {{ parameters.name }}
