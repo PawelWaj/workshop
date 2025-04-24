@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: kubernetes-app-template
   title: Kubernetes Application Template
-  description: Create a simple Kubernetes application manifest for ArgoCD deployment
+  description: Create Kubernetes manifests for ArgoCD deployment
 spec:
   owner: user:guest
   type: service
@@ -22,7 +22,7 @@ spec:
         teamName:
           title: Team Name
           type: string
-          description: Name of your team
+          description: Name of your team (will also be used as namespace)
         appDescription:
           title: Application Description
           type: string
@@ -74,6 +74,7 @@ spec:
           image: ${{ parameters.image }}
           replicas: ${{ parameters.replicas }}
           customLabel: ${{ parameters.customLabel }}
+          repoUrl: ${{ parameters.repoUrl }}
     
     - id: publish
       name: Publish

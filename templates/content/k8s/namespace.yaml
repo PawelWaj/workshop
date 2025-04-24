@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ${{values.teamName}}
+  labels:
+    name: ${{values.teamName}}
+    team: ${{values.teamName}}

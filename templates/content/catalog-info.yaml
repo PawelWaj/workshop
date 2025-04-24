@@ -4,7 +4,7 @@ metadata:
   name: ${{values.appName}}
   description: ${{values.appDescription}}
   annotations:
-    github.com/project-slug: ${{values.repoUrl | replace("https://github.com/", "")}}
+    github.com/project-slug: ${{values.repoUrl | replace('https://github.com/', '') | replace('.git', '')}}
     backstage.io/kubernetes-id: ${{values.appName}}
   labels:
     team: ${{values.teamName}}
