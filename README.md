@@ -17,7 +17,7 @@ Navigate to the Backstage portal in your browser.
 
 kubectl -n backstage port-forward svc/backstage 7007:7007
 
-# Access localhost:7007
+#### Access localhost:7007
 
 ### 2. Create a New Component
 
