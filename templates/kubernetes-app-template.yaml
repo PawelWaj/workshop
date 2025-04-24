@@ -1,0 +1,105 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: kubernetes-app-template
+  title: Kubernetes Application Template
+  description: Create a simple Kubernetes application manifest for ArgoCD deployment
+spec:
+  owner: user:guest
+  type: service
+  
+  parameters:
+    - title: Application Information
+      required:
+        - appName
+        - teamName
+      properties:
+        appName:
+          title: Application Name
+          type: string
+          description: Name of your Kubernetes application
+          ui:autofocus: true
+        teamName:
+          title: Team Name
+          type: string
+          description: Name of your team
+        appDescription:
+          title: Application Description
+          type: string
+          description: Short description of your application
+          default: Sample application for ArgoCD deployment
+    
+    - title: Configuration Details
+      required:
+        - image
+      properties:
+        image:
+          title: Container Image
+          type: string
+          description: Docker image for your application
+          default: nginx:latest
+        replicas:
+          title: Replicas
+          type: integer
+          description: Number of application replicas
+          default: 1
+        customLabel:
+          title: Custom Label
+          type: string
+          description: Add a random text as a custom label
+          default: my-awesome-app
+    
+    - title: Repository Information
+      required:
+        - repoUrl
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+
+  steps:
+    - id: fetch-base
+      name: Fetch Base
+      action: fetch:template
+      input:
+        url: ./content
+        values:
+          appName: ${{ parameters.appName }}
+          teamName: ${{ parameters.teamName }}
+          appDescription: ${{ parameters.appDescription }}
+          image: ${{ parameters.image }}
+          replicas: ${{ parameters.replicas }}
+          customLabel: ${{ parameters.customLabel }}
+    
+    - id: publish
+      name: Publish
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        description: Kubernetes application manifest for ${{ parameters.appName }}
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: main
+        gitAuthorName: Backstage Workshop
+        gitAuthorEmail: workshop@example.com
+        
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+  
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}
+      - title: Pull Request
+        icon: pullRequest
+        url: ${{ steps['publish'].output.remoteUrl }}/pull/1

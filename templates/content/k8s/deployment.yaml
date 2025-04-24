@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${{values.appName}}
+  namespace: ${{values.teamName}}
+  labels:
+    app: ${{values.appName}}
+    team: ${{values.teamName}}
+    custom-label: ${{values.customLabel}}
+spec:
+  replicas: ${{values.replicas}}
+  selector:
+    matchLabels:
+      app: ${{values.appName}}
+  template:
+    metadata:
+      labels:
+        app: ${{values.appName}}
+        custom-label: ${{values.customLabel}}
+    spec:
+      containers:
+      - name: ${{values.appName}}
+        image: ${{values.image}}
+        ports:
+        - containerPort: 80

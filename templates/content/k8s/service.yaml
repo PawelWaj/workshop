@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${{values.appName}}
+  namespace: ${{values.teamName}}
+  labels:
+    app: ${{values.appName}}
+    team: ${{values.teamName}}
+    custom-label: ${{values.customLabel}}
+spec:
+  selector:
+    app: ${{values.appName}}
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
