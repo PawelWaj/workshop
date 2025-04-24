@@ -6,13 +6,18 @@ This hands-on workshop will guide you through creating Kubernetes application ma
 
 - Access to the Backstage portal
 - GitHub account
-- Access to ArgoCD dashboard (for verification)
+- Access to ArgoCD dashboard 
 
 ## Workshop Steps
 
 ### 1. Access the Backstage Portal
 
 Navigate to the Backstage portal in your browser.
+## Deployend Backstage 
+
+kubectl -n backstage port-forward svc/backstage 7007:7007
+
+# Access localhost:7007
 
 ### 2. Create a New Component
 
@@ -56,8 +61,10 @@ Click the **Create** button at the bottom of the form to generate your Kubernete
 Now that your manifests are in a public repository, create an ArgoCD application to deploy them:
 
 1. Log in to the ArgoCD dashboard
-2. Click the **+ New App** button
-3. Fill in the application details:
+2. kubectl -n argocd port-forward svc/argocd-server 8080:80
+3. access localhost:8080
+4. Click the **+ New App** button
+5. Fill in the application details:
    - **Application Name**: Use the same name as in Backstage
    - **Project**: Select `default` or the appropriate project
    - **Repository URL**: Enter your GitHub repository URL
@@ -65,7 +72,7 @@ Now that your manifests are in a public repository, create an ArgoCD application
    - **Cluster**: Select your target Kubernetes cluster
    - **Namespace**: Enter the team name you used in Backstage
 
-4. Click **Create** to deploy your application
+6. Click **Create** to deploy your application
 
 ### 7. Verify Deployment
 
@@ -90,9 +97,4 @@ Now that your manifests are in a public repository, create an ArgoCD application
 - **ArgoCD Sync Error**: If ArgoCD can't sync, verify that your repository is public
 - **Deployment Issues**: Check ArgoCD logs and event messages for any deployment errors
 
-## Next Steps
 
-Once you've completed the workshop, consider:
-- Adding more resources to your manifests (ConfigMaps, Secrets, etc.)
-- Setting up CI/CD pipelines to update your manifests
-- Exploring more advanced Backstage templates
