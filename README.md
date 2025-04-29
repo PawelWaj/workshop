@@ -13,9 +13,6 @@ This hands-on workshop will guide you through creating Kubernetes application ma
 ### 1. Access the Backstage Portal
 
 Navigate to the Backstage portal in your browser.
-## Deployend Backstage 
-
-kubectl -n backstage port-forward svc/backstage 7007:7007
 
 #### Access localhost:7007
 
