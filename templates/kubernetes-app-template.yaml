@@ -86,6 +86,7 @@ spec:
         defaultBranch: main
         gitAuthorName: Backstage Workshop
         gitAuthorEmail: workshop@example.com
+        repoVisibility: 'public'
         
     - id: register
       name: Register
