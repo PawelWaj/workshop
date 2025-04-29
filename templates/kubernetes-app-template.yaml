@@ -5,7 +5,7 @@ metadata:
   title: Kubernetes Application Template
   description: Create Kubernetes manifests for ArgoCD deployment
 spec:
-  owner: user:guest
+  owner: user:guests
   type: service
   
   parameters:
