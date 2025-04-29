@@ -5,8 +5,9 @@ metadata:
   title: Kubernetes Application Template
   description: Create Kubernetes manifests for ArgoCD deployment
 spec:
-  owner: user:guests
-  type: service
+  owner: group:default/guests
+  type: grpc
+  system: examples
   
   parameters:
     - title: Application Information
@@ -60,7 +61,6 @@ spec:
           ui:options:
             allowedHosts:
               - github.com
-
   steps:
     - id: fetch-base
       name: Fetch Base
