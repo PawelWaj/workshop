@@ -11,4 +11,5 @@ metadata:
 spec:
   type: service
   lifecycle: experimental
-  owner: ${{values.teamName}}
+  owner: group:default/guests
+  system: examples
