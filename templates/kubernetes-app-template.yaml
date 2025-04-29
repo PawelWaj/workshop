@@ -6,7 +6,7 @@ metadata:
   description: Create Kubernetes manifests for ArgoCD deployment
 spec:
   owner: group:default/guests
-  type: grpc
+  type: service
   system: examples
   
   parameters:
