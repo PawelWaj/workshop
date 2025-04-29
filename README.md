@@ -46,17 +46,8 @@ Complete the form with the following details:
 
 Click the **Create** button at the bottom of the form to generate your Kubernetes manifests.
 
-### 5. Make Repository Public
 
-⚠️ **Important**: The template creates a private GitHub repository by default, but ArgoCD can't access private repositories with this setup.
-
-1. Go to your newly created GitHub repository
-2. Click on **Settings** at the top of the repository page
-3. Scroll down to the **Danger Zone** section
-4. Find **Change repository visibility** and click **Change visibility**
-5. Select **Make public** and confirm by typing the repository name
-
-### 6. Create an ArgoCD Application
+### 5. Create an ArgoCD Application
 
 Now that your manifests are in a public repository, create an ArgoCD application to deploy them:
 
@@ -74,7 +65,7 @@ Now that your manifests are in a public repository, create an ArgoCD application
 
 6. Click **Create** to deploy your application
 
-### 7. Verify Deployment
+### 6. Verify Deployment
 
 1. In the ArgoCD dashboard, click on your newly created application
 2. Check that all resources are synced and healthy
